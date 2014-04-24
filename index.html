@@ -9,19 +9,25 @@
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
+        //$body.html('');
+        console.log(streams.home);
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + " " + tweet.created_at);
           $tweet.appendTo($body);
           index -= 1;
         }
 
+        //create "newTweets" array that stores new data in streams.home not already displayed
+        //create timer that checks streams.home for new data and copies it to "newTweets" variable
+
       });
 
     </script>
+    
+    <a href="#" class="new_tweets">Load <span></span>more Tweets</a>
   </body>
 </html>
