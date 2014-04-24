@@ -9,6 +9,7 @@
 
       $(document).ready(function(){
         var $tweets = $(".tweets");
+        var $newTweetCounter = $(".new_tweets").children("span");
         var lastTweetDisplayedIndex = -1; //set to -1 so that loadTweets loop starts counter at 0, and doesn't duplicate last tweet
         var latestTweetIndex = streams.home.length - 1;
 
@@ -22,6 +23,7 @@
           }
 
           lastTweetDisplayedIndex = latestTweetIndex; //use stored values so that new data doesn't get skipped
+          $newTweetCounter.html("");
         };
 
         loadTweets();
@@ -34,13 +36,13 @@
         //Periodic check for new tweets
         setInterval(function(){
           latestTweetIndex = streams.home.length - 1;
-          console.log(latestTweetIndex - lastTweetDisplayedIndex); 
+          $newTweetCounter.html(latestTweetIndex - lastTweetDisplayedIndex); 
         }, 2000);
       });
 
     </script>
     
-    <a href="#" class="new_tweets">Load<span></span> New Tweets</a>
+    <a href="#" class="new_tweets">Load <span></span> New Tweets</a>
     <div class="tweets"></div>
   </body>
 </html>
