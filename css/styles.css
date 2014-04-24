@@ -1,6 +1,9 @@
 body {
     padding-top: 70px;
-    background-color: rgb(237,237,237);
+    background-color: #C0DEED;
+    background-image: url('../img/bg.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
 .navbar {
@@ -12,6 +15,7 @@ body {
 
 .info, .tweets-container {
 	background-color: white;
+	opacity: 0.75;
 	border-radius: 5px;
 }
 
