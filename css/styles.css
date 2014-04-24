@@ -14,10 +14,8 @@ body {
 	font-size: 2em;
 }
 
-.info, .tweets-container {
-	background-color: white;
-	opacity: 0.75;
-	border-radius: 5px;
+.panel-default {
+	opacity: 0.9;
 }
 
 h3 {
