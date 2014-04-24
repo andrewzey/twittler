@@ -21,3 +21,44 @@ body {
 h3 {
 	margin-top: 10px;
 }
+
+.tweet-panel {
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 0;
+}
+
+.tweet {
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+	border-top: none;
+	border-bottom: 1px solid #E9E9E9;
+}
+
+.tweet:last-child {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.tweet p {
+	line-height: 1em;
+}
+
+.tweet .user {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.tweet .time {
+	float: right;
+}
+
+.new_tweets {
+	display: block;
+	line-height: 3em;
+	background-color: #F7F7F7;
+	text-align: center;
+	border-bottom: 1px solid #E9E9E9;
+}
