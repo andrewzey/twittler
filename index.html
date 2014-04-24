@@ -9,29 +9,33 @@
 
       $(document).ready(function(){
         var $tweets = $(".tweets");
-        var lastTweetDisplayed = 0;
+        var lastTweetDisplayedIndex = -1; //set to -1 so that loadTweets loop starts counter at 0, and doesn't duplicate last tweet
+        var latestTweetIndex = streams.home.length - 1;
 
         //load tweets function
         var loadTweets = function(){
-          for (var i = lastTweetDisplayed; i < streams.home.length - 1; i++) {
+          for (var i = lastTweetDisplayedIndex + 1; i <= (latestTweetIndex); i++) {
             var tweet = streams.home[i];
             var $tweet = $('<div></div>');
             $tweet.text(i + '@' + tweet.user + ': ' + tweet.message + " " + tweet.created_at);
             $tweet.prependTo($tweets);
           }
 
-          lastTweetDisplayed = streams.home.length - 1;
-          // console.log(streams.home.length);
-          // console.log(lastTweetDisplayed);
+          lastTweetDisplayedIndex = latestTweetIndex; //use stored values so that new data doesn't get skipped
         };
 
         loadTweets();
 
         //Load New Tweets Button
         $(".new_tweets").on("click", function(){
-          loadTweets(); 
+          loadTweets();
         });
 
+        //Periodic check for new tweets
+        setInterval(function(){
+          latestTweetIndex = streams.home.length - 1;
+          console.log(latestTweetIndex - lastTweetDisplayedIndex); 
+        }, 2000);
       });
 
     </script>
