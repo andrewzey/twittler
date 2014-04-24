@@ -8,26 +8,35 @@
     <script>
 
       $(document).ready(function(){
-        var $body = $('body');
-        //$body.html('');
-        console.log(streams.home);
+        var $tweets = $(".tweets");
+        var lastTweetDisplayed = 0;
 
-        var index = streams.home.length - 1;
-        while(index >= 0){
-          var tweet = streams.home[index];
-          var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + " " + tweet.created_at);
-          $tweet.appendTo($body);
-          index -= 1;
-        }
+        //load tweets function
+        var loadTweets = function(){
+          for (var i = lastTweetDisplayed; i < streams.home.length - 1; i++) {
+            var tweet = streams.home[i];
+            var $tweet = $('<div></div>');
+            $tweet.text(i + '@' + tweet.user + ': ' + tweet.message + " " + tweet.created_at);
+            $tweet.prependTo($tweets);
+          }
 
-        //create "newTweets" array that stores new data in streams.home not already displayed
-        //create timer that checks streams.home for new data and copies it to "newTweets" variable
+          lastTweetDisplayed = streams.home.length - 1;
+          // console.log(streams.home.length);
+          // console.log(lastTweetDisplayed);
+        };
+
+        loadTweets();
+
+        //Load New Tweets Button
+        $(".new_tweets").on("click", function(){
+          loadTweets(); 
+        });
 
       });
 
     </script>
     
-    <a href="#" class="new_tweets">Load <span></span>more Tweets</a>
+    <a href="#" class="new_tweets">Load<span></span> New Tweets</a>
+    <div class="tweets"></div>
   </body>
 </html>
