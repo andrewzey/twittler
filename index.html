@@ -96,6 +96,8 @@
     <script src="data_generator.js"></script>
     <script>
 
+      var bgTweetCheck; //variable for periodic new tweet checker function
+
       $(document).ready(function(){
         //Permanent DOM Node Variables
         var $tweets = $(".tweets");
@@ -108,7 +110,14 @@
         var lastTweetDisplayedIndex = -1; //set to -1 so that loadTweets loop starts counter at 0, and doesn't duplicate last tweet
         var latestTweetIndex = streams.home.length - 1;
 
-        //load tweets function
+        //FUNCTION - populate following list
+        var populateFollowingList = function() {
+          for (var key in streams.users) {
+            $(".following").append($('<li>@'+ '<a href="#" class="username">' + key + '</a>'));
+          }
+        };
+
+        //FUNCTION - load Tweets function
         var loadTweets = function(){
           for (var i = lastTweetDisplayedIndex + 1; i <= (latestTweetIndex); i++) {
             var tweet = (view === "home") ? streams.home[i] : streams.users[view][i];
@@ -127,14 +136,19 @@
           $newTweetCounter.html("");
           $newTweetsButton.hide();
           
+          clearInterval(bgTweetCheck);
+          //Background check for new tweets
+          bgTweetCheck = setInterval(function(){
+            latestTweetIndex = (view === "home") ? streams.home.length - 1 : streams.users[view].length - 1;
+
+            if ((latestTweetIndex - lastTweetDisplayedIndex) > 0) {
+              $newTweetsButton.show();
+            }
+            $newTweetCounter.html(latestTweetIndex - lastTweetDisplayedIndex); 
+          }, 8000);
         };
-        loadTweets(); //initial page load
 
-        //Populate Following List in Sidebar
-        for (var key in streams.users) {
-          $(".following").append($('<li>@'+ '<a href="#" class="username">' + key + '</a>'))
-        }
-
+        //FUNCTION - switch views function
         var switchView = function(targetView){
           view = targetView;
           if (view === "home") {
@@ -143,38 +157,32 @@
             $viewTitle.text("@" + view + "'s Tweets");
           }
 
-          //reset tweet counter variables on view view switch
+          //reset tweet counter variables on view switch
           lastTweetDisplayedIndex = -1
           latestTweetIndex = (targetView === "home") ? streams.home.length - 1 : streams.users[targetView].length - 1;
           $(".tweets").html("");
+          loadTweets();
         };
 
-        //Load New Tweets Button Event Handler
+        //EVENT HANDLER - Load New Tweets Button Event Handler
         $(".new_tweets").on("click", function(){
           loadTweets();
         });
 
-        //Event handler for username clicks -- element is event delegated
+        //EVENT HANDLER - for username clicks -- element is event delegated for post intial load nodes
         $("body").on("click", ".username", function() {
           switchView($(this).text());
-          loadTweets();
         });
 
-        //Event handler for See-All Button
+        //EVENT HANDLER - for See-All Button
         $(".see-all").on("click", function() {
           switchView("home");
-          loadTweets();
         });
 
-        //Periodic check for new tweets
-        setInterval(function(){
-          latestTweetIndex = (view === "home") ? streams.home.length - 1 : streams.users[view].length - 1;
-
-          if ((latestTweetIndex - lastTweetDisplayedIndex) > 0) {
-            $newTweetsButton.show();
-          }
-          $newTweetCounter.html(latestTweetIndex - lastTweetDisplayedIndex); 
-        }, 5000);
+        //RUN ON PAGE LOAD
+        loadTweets();
+        populateFollowingList();        
+        
       });
 
     </script>
