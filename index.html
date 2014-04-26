@@ -101,6 +101,7 @@
     <script>
 
       $(document).ready(function(){
+        var mode = "all"; //can be "all" or "<twitter username>"
         var $tweets = $(".tweets");
         var $newTweetCounter = $(".new_tweets").children("span");
         var $newTweetsButton = $(".new_tweets");
@@ -113,7 +114,7 @@
             var tweet = streams.home[i];
             var $tweet = $(
               '<div class="tweet">' +
-              '<p class="row1"><span class="user">@'+ '<a href="" class="user">' + tweet.user + '</a>' + '</span>' + 
+              '<p class="row1"><span class="user">@'+ '<a href="" class="username">' + tweet.user + '</a>' + '</span>' + 
               '<span class="time">'+ tweet.created_at + '</span>' + '</p>' +
               '<p class="row2"><span class="message">' + tweet.message + '</span></p>' +
               '</div>'
@@ -126,12 +127,19 @@
           $newTweetsButton.hide();
           
         };
+        loadTweets(); //initial page load
 
-        loadTweets();
 
         //Load New Tweets Button
         $(".new_tweets").on("click", function(){
           loadTweets();
+        });
+
+        //Event handler for username clicks
+        $(".username").on("click", function(event) {
+          event.preventDefault();
+          mode = $(this).text();
+          console.log(mode);
         });
 
         //Periodic check for new tweets
