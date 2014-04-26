@@ -57,11 +57,9 @@
             </div>
           </div>
 
-          <!--
           <div class="well">
-            <textarea name="text">Compose a New Tweet</textarea> <button class="send">send</button>
+            <textarea name="compose-tweet">Compose a New Tweet</textarea> <button class="tweet-button">Tweet</button>
           </div>
-          -->
           
         </div>
 
@@ -98,6 +96,9 @@
     <script>
 
       var bgTweetCheck; //variable for periodic new tweet checker function
+
+      var visitor = "andrewzey"; //my twitter handle
+      streams.users.andrewzey = [];
 
       $(document).ready(function(){
         //Permanent DOM Node Variables
@@ -146,7 +147,7 @@
               $newTweetsButton.show();
             }
             $newTweetCounter.html(latestTweetIndex - lastTweetDisplayedIndex); 
-          }, 8000);
+          }, 5000);
         };
 
         //FUNCTION - switch views function
@@ -177,6 +178,12 @@
 
         //EVENT HANDLER - for See-All Button
         $(".see-all").on("click", function() {
+          switchView("home");
+        });
+
+        //EVENT HANDLER - Tweet Button
+        $(".tweet-button").on("click", function() {
+          writeTweet($(this).prev().val());
           switchView("home");
         });
 
