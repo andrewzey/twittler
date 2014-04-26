@@ -113,7 +113,7 @@
             var tweet = streams.home[i];
             var $tweet = $(
               '<div class="tweet">' +
-              '<p class="row1"><span class="user">@'+ tweet.user + '</span>' + 
+              '<p class="row1"><span class="user">@'+ '<a href="" class="user">' + tweet.user + '</a>' + '</span>' + 
               '<span class="time">'+ tweet.created_at + '</span>' + '</p>' +
               '<p class="row2"><span class="message">' + tweet.message + '</span></p>' +
               '</div>'
