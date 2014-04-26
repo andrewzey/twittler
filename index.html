@@ -48,16 +48,10 @@
               <h3 class="panel-title">@AndrewZey</h3>
             </div>
             <div class="panel-body">
-              <!--
               <p>Following:</p>
-              <ul>
-                <li>@shawndrost</li>
-                <li>@sharksforcheap</li>
-                <li>@mracus</li>
-                <li>more...</li>
+              <ul class="following">
               </ul>
-              <a href="">See all Tweets</a>
-              -->
+              <a href="#" class="see-all">See all Tweets</a>
             </div>
           </div>
 
@@ -133,6 +127,11 @@
         };
         loadTweets(); //initial page load
 
+        //Populate Following List in Sidebar
+        for (var key in streams.users) {
+          $(".following").append($('<li>@'+ '<a href="#" class="username">' + key + '</a>'))
+        }
+
         var switchView = function(targetView){
           view = targetView;
 
@@ -148,8 +147,14 @@
         });
 
         //Event handler for username clicks -- element is event delegated
-        $(".tweets").on("click", ".username", function(event) {
+        $("body").on("click", ".username", function() {
           switchView($(this).text());
+          loadTweets();
+        });
+
+        //Event handler for See-All Button
+        $(".see-all").on("click", function() {
+          switchView("home");
           loadTweets();
         });
 
