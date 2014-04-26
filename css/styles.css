@@ -28,6 +28,17 @@ h3 {
 	padding-top: 0;
 }
 
+.following-panel {
+	padding-left: 0;
+	padding-right: 0;
+	padding-bottom: 0;
+}
+
+.following-panel > div {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
 .tweet {
 	padding-top: 15px;
 	padding-bottom: 10px;
@@ -68,4 +79,11 @@ h3 {
 	top: -6px;
 	list-style: none;
 	padding-left: 15px;
+}
+
+.see-all {
+	display: block;
+	text-align: center;
+	background-color: #F7F7F7;
+	line-height: 2.4em;
 }

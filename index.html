@@ -47,10 +47,12 @@
             <div class="panel-heading">
               <h3 class="panel-title">@AndrewZey</h3>
             </div>
-            <div class="panel-body">
-              <p>Following:</p>
-              <ul class="following">
-              </ul>
+            <div class="panel-body following-panel">
+              <div>
+                <p>Following:</p>
+                <ul class="following">
+                </ul>
+              </div>
               <a href="#" class="see-all">See all Tweets</a>
             </div>
           </div>
@@ -66,7 +68,7 @@
         <div class="tweets-container col-md-9">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">Tweets</h3>
+              <h3 class="panel-title">All Tweets</h3>
             </div>
             <div class="panel-body tweet-panel">
               <a href="#" class="new_tweets">Load <span></span> New Tweets</a>
@@ -97,6 +99,7 @@
       $(document).ready(function(){
         //Permanent DOM Node Variables
         var $tweets = $(".tweets");
+        var $viewTitle = $(".tweets-container").find(".panel-title");
         var $newTweetCounter = $(".new_tweets").children("span");
         var $newTweetsButton = $(".new_tweets");
 
@@ -134,6 +137,11 @@
 
         var switchView = function(targetView){
           view = targetView;
+          if (view === "home") {
+            $viewTitle.text("All Tweets");
+          } else {
+            $viewTitle.text("@" + view + "'s Tweets");
+          }
 
           //reset tweet counter variables on view view switch
           lastTweetDisplayedIndex = -1
