@@ -101,11 +101,13 @@
     <script>
 
       $(document).ready(function(){
-        var view = "home"; //can be "home" or "<twitter username>"
+        //Permanent DOM Node Variables
         var $tweets = $(".tweets");
         var $newTweetCounter = $(".new_tweets").children("span");
         var $newTweetsButton = $(".new_tweets");
 
+        //View-Related and Tweet Loading Variables
+        var view = "home"; //can be "home" or "<twitter username>"
         var lastTweetDisplayedIndex = -1; //set to -1 so that loadTweets loop starts counter at 0, and doesn't duplicate last tweet
         var latestTweetIndex = streams.home.length - 1;
 
@@ -131,34 +133,29 @@
         };
         loadTweets(); //initial page load
 
+        var switchView = function(targetView){
+          view = targetView;
 
-        //Load New Tweets Button
+          //reset tweet counter variables on view view switch
+          lastTweetDisplayedIndex = -1
+          latestTweetIndex = (targetView === "home") ? streams.home.length - 1 : streams.users[targetView].length - 1;
+          $(".tweets").html("");
+        };
+
+        //Load New Tweets Button Event Handler
         $(".new_tweets").on("click", function(){
-          event.preventDefault();
           loadTweets();
         });
 
         //Event handler for username clicks -- element is event delegated
         $(".tweets").on("click", ".username", function(event) {
-          event.preventDefault();
-          view = $(this).text();
-          console.log(view);
-          //reset tweet counter variables on view view switch
-          lastTweetDisplayedIndex = -1
-          latestTweetIndex = streams.users[view].length - 1;
-          $(".tweets").html("");
-
+          switchView($(this).text());
           loadTweets();
-
         });
 
         //Periodic check for new tweets
         setInterval(function(){
-          if (view === "home") {
-            latestTweetIndex = streams.home.length - 1;
-          } else {
-            latestTweetIndex = streams.users[view].length - 1;
-          }
+          latestTweetIndex = (view === "home") ? streams.home.length - 1 : streams.users[view].length - 1;
 
           if ((latestTweetIndex - lastTweetDisplayedIndex) > 0) {
             $newTweetsButton.show();
