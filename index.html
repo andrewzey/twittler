@@ -58,7 +58,7 @@
           </div>
 
           <div class="well">
-            <textarea name="compose-tweet">Compose a New Tweet</textarea> <button class="tweet-button">Tweet</button>
+            <textarea class="compose-tweet">Compose a New Tweet</textarea> <button class="tweet-button">Tweet</button>
           </div>
           
         </div>
@@ -128,7 +128,7 @@
               '<div class="tweet">' +
               '<p class="row1"><span class="user">@'+ '<a href="#" class="username">' + tweet.user + '</a>' + '</span>' + 
               '<span class="time">'+ jQuery.timeago(tweet.created_at) + '</span>' + '</p>' +
-              '<p class="row2"><span class="message">' + i + tweet.message + '</span></p>' +
+              '<p class="row2"><span class="message">' + tweet.message + '</span></p>' +
               '</div>'
             );
             $tweet.prependTo($tweets);
@@ -183,7 +183,9 @@
 
         //EVENT HANDLER - Tweet Button
         $(".tweet-button").on("click", function() {
-          writeTweet($(this).prev().val());
+          var $compose = $(".compose-tweet");
+          writeTweet($compose.val());
+          $compose.val("compose another tweet");
           switchView("home");
         });
 
