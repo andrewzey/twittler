@@ -101,22 +101,24 @@
     <script>
 
       $(document).ready(function(){
-        var mode = "all"; //can be "all" or "<twitter username>"
+        var view = "home"; //can be "home" or "<twitter username>"
         var $tweets = $(".tweets");
         var $newTweetCounter = $(".new_tweets").children("span");
         var $newTweetsButton = $(".new_tweets");
+
         var lastTweetDisplayedIndex = -1; //set to -1 so that loadTweets loop starts counter at 0, and doesn't duplicate last tweet
         var latestTweetIndex = streams.home.length - 1;
 
         //load tweets function
         var loadTweets = function(){
           for (var i = lastTweetDisplayedIndex + 1; i <= (latestTweetIndex); i++) {
-            var tweet = streams.home[i];
+            var tweet = (view === "home") ? streams.home[i] : streams.users[view][i];
+            
             var $tweet = $(
               '<div class="tweet">' +
-              '<p class="row1"><span class="user">@'+ '<a href="" class="username">' + tweet.user + '</a>' + '</span>' + 
+              '<p class="row1"><span class="user">@'+ '<a href="#" class="username">' + tweet.user + '</a>' + '</span>' + 
               '<span class="time">'+ tweet.created_at + '</span>' + '</p>' +
-              '<p class="row2"><span class="message">' + tweet.message + '</span></p>' +
+              '<p class="row2"><span class="message">' + i + tweet.message + '</span></p>' +
               '</div>'
             );
             $tweet.prependTo($tweets);
@@ -132,19 +134,31 @@
 
         //Load New Tweets Button
         $(".new_tweets").on("click", function(){
+          event.preventDefault();
           loadTweets();
         });
 
-        //Event handler for username clicks
-        $(".username").on("click", function(event) {
+        //Event handler for username clicks -- element is event delegated
+        $(".tweets").on("click", ".username", function(event) {
           event.preventDefault();
-          mode = $(this).text();
-          console.log(mode);
+          view = $(this).text();
+          console.log(view);
+          //reset tweet counter variables on view view switch
+          lastTweetDisplayedIndex = -1
+          latestTweetIndex = streams.users[view].length - 1;
+          $(".tweets").html("");
+
+          loadTweets();
+
         });
 
         //Periodic check for new tweets
         setInterval(function(){
-          latestTweetIndex = streams.home.length - 1;
+          if (view === "home") {
+            latestTweetIndex = streams.home.length - 1;
+          } else {
+            latestTweetIndex = streams.users[view].length - 1;
+          }
 
           if ((latestTweetIndex - lastTweetDisplayedIndex) > 0) {
             $newTweetsButton.show();
