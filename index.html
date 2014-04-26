@@ -126,7 +126,7 @@
             var $tweet = $(
               '<div class="tweet">' +
               '<p class="row1"><span class="user">@'+ '<a href="#" class="username">' + tweet.user + '</a>' + '</span>' + 
-              '<span class="time">'+ tweet.created_at + '</span>' + '</p>' +
+              '<span class="time">'+ jQuery.timeago(tweet.created_at) + '</span>' + '</p>' +
               '<p class="row2"><span class="message">' + i + tweet.message + '</span></p>' +
               '</div>'
             );
@@ -182,7 +182,7 @@
 
         //RUN ON PAGE LOAD
         loadTweets();
-        populateFollowingList();        
+        populateFollowingList();       
         
       });
 
