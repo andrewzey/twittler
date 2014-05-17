@@ -98,7 +98,7 @@
       var bgTweetCheck; //variable for periodic new tweet checker function
 
       var visitor = "andrewzey"; //my twitter handle
-      streams.users.andrewzey = [];
+      streams.users[visitor] = [];
 
       $(document).ready(function(){
         //Permanent DOM Node Variables
@@ -115,7 +115,9 @@
         //FUNCTION - populate following list
         var populateFollowingList = function() {
           for (var key in streams.users) {
-            $(".following").append($('<li>@'+ '<a href="#" class="username">' + key + '</a>'));
+            if (key !== visitor) {
+              $(".following").append($('<li>@'+ '<a href="#" class="username">' + key + '</a>'));
+            }
           }
         };
 
@@ -185,7 +187,7 @@
         $(".tweet-button").on("click", function() {
           var $compose = $(".compose-tweet");
           writeTweet($compose.val());
-          $compose.val("compose another tweet");
+          $compose.val("");
           switchView("home");
         });
 
