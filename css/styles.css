@@ -87,3 +87,21 @@ h3 {
 	background-color: #F7F7F7;
 	line-height: 2.4em;
 }
+
+.well {
+	position: relative;
+}
+
+.compose-tweet {
+	width: 100%;
+	height: 80px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+.tweet-button {
+	float: right;
+	margin-bottom: -5px;
+}
