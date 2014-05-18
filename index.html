@@ -45,7 +45,7 @@
 
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">@AndrewZey</h3>
+              <h3 class="panel-title visitor"></h3>
             </div>
             <div class="panel-body following-panel">
               <div>
@@ -97,7 +97,7 @@
 
       var bgTweetCheck; //variable for periodic new tweet checker function
 
-      var visitor = "andrewzey"; //my twitter handle
+      var visitor = prompt("What is your twitter handle?"); //my twitter handle
       streams.users[visitor] = [];
 
       $(document).ready(function(){
@@ -119,6 +119,7 @@
               $(".following").append($('<li>@'+ '<a href="#" class="username">' + key + '</a>'));
             }
           }
+          $(".visitor").html("@"+"<a href='#' class='username'>" + visitor + "</a>");
         };
 
         //FUNCTION - load Tweets function
@@ -188,7 +189,12 @@
           var $compose = $(".compose-tweet");
           writeTweet($compose.val());
           $compose.val("");
-          switchView("home");
+          if (view !== visitor) {
+            switchView("home");
+          } else {
+            switchView(visitor);
+          }
+          
         });
 
         //RUN ON PAGE LOAD
